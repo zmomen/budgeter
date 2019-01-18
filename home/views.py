@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
 from transactions.models import Transaction, Category
+from .helpers import bulk_insert_trans
 
 
 # Create your views here.
@@ -51,8 +52,8 @@ def upload_csv(request):
         data.append(line)
 
     file_type = request.POST.get('file_type', '')
-    # celery_insert_trans.delay(data, file_type)
-    print('celery working...')
+    bulk_insert_trans(data, file_type)
+    print('inserting transactions...')
 
     # pct = 'Percentage: %8.2f%%' % bc.get_accuracy()
     # messages.add_message(request, messages.ERROR, pct)
