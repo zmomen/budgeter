@@ -59,7 +59,7 @@
 		{% endfor %}
 	</ul>
 	{% endif %}
-	<form action="{% url 'upload-csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+	<form action="{% url 'home:upload-csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
 		{% csrf_token%}
 		<div>
 			<h3>Upload Transactions: </h3>

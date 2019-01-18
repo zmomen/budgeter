@@ -23,5 +23,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include('transactions.urls', namespace='transactions')),
     url(r'^$', home_views.HomeView.as_view(), name='home'),
-    url(r'upload/csv/$', home_views.upload_csv, name='upload-csv')
 ]
