@@ -13,9 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 
+from home import views as home_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^', include('transactions.urls', namespace='transactions')),
+    url(r'^$', home_views.HomeView.as_view(), name='home'),
+    url(r'upload/csv/$', home_views.upload_csv, name='upload-csv')
 ]
