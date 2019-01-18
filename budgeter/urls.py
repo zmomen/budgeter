@@ -22,5 +22,5 @@ from home import views as home_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include('transactions.urls', namespace='transactions')),
-    url(r'^$', home_views.HomeView.as_view(), name='home'),
+    url(r'^', include('home.urls', namespace='home')),
 ]
