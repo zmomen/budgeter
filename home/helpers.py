@@ -3,14 +3,17 @@ from transactions.BankClassify import BankClassify
 
 
 def bulk_insert_trans(data, file_type):
-    bc = BankClassify()
-    train = Transaction.objects.values_list('tran_desc', 'category__name')
-    bc.update_training_set(train)
+    # bc = BankClassify()
+    # train = Transaction.objects.values_list('tran_desc', 'category__name')
+    # bc.update_training_set(train)
 
     # CAPITAL transactions
     if file_type == 'CAPITAL':
         for row in data:
-            cat = Category.objects.filter(name__contains=bc.category_classify(row[3]))[0]
+            if len(Category.objects.filter(name__contains=row[4])) == 0:
+                cat = Category.objects.create(name=row[4])
+            else:
+                cat = Category.objects.filter(name__contains=row[4])[0]
 
             deb = 0 if row[5] == '' else float(row[5])
             cred = 0 if row[6] == '' else float(row[6])
@@ -46,4 +49,4 @@ def bulk_insert_trans(data, file_type):
             Transaction.objects.create(tran_dt=row[0], tran_desc=row[1], category=cat,
                                        tran_amt=float(row[2]), tran_type=int(row[3]))
 
-    return 'celery transactions inserted! refresh page now, Percentage: %8.2f%%' % bc.get_accuracy()
+    return 'celery transactions inserted!'
