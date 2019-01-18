@@ -1,0 +1,83 @@
+{% load staticfiles %}
+<html>
+<head>
+	<title>Money Tracker!</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/png"/>
+
+</head>
+
+<body>
+<div class="container">
+	<nav>
+		<div class="navbar-brand">
+			<a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+			<a class="nav-item nav-link" href="{% url 'transactions:reports' %}">Reports</a>
+			<a class="nav-item nav-link" href="{% url 'transactions:view-categories' %}">Categories</a>
+		</div>
+	</nav>
+</div>
+<div class="container">
+	<div class="pull-right">
+		<form action="{% url 'transactions:search' %}" method="GET">
+			<label for="txtSearch">Search:</label>
+			<input class="pull-right" name="txtSearch" placeholder="..." type="text"> <br/><br/>
+			<label for="from_date">From:</label>
+			<input class="pull-right" name="from_date" type="date"><br/><br/>
+			<label for="to_date">To:</label>
+			<input class="pull-right" name="to_date" type="date"><br/><br/>
+			<button class="btn btn-primary" type="submit">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</form>
+	</div>
+	{% block content %}
+	{% endblock %}
+</div>
+</body>
+{% block scripts %}
+<script>
+    function sortTable(column) {
+      
+      var tbody = document.getElementById("tbody");
+      var rows = tbody.rows;
+      var numList=[], i, switching=true, shouldSwitch, x, y, i;
+      while (switching) {
+        switching=false;
+        for (i = 0; i < (rows.length - 1); i++) {
+           shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[column].innerHTML.replace(/[$,]+/g,"");
+            y = rows[i+1].getElementsByTagName("td")[column].innerHTML.replace(/[$,]+/g,"");
+            
+            // Check if the two rows should switch place:
+                if (isNaN(x)) {
+                    if (x.toLowerCase() < y.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (parseFloat(x) < parseFloat(y)) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+        }
+        if (shouldSwitch) {
+          /* If a switch has been marked, make the switch
+          and mark that a switch has been done: */
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+      
+    }
+    
+
+
+</script>
+
+{% endblock %}
+</html>

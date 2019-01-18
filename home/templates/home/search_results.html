@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% load tran_tags %}
+
+{% block content %}
+<div class="col-md-8">
+	
+	<h3>Search results for <i>"{{ searchQry.0 }}"</i></h3>
+	<h4>From: {{ searchQry.1 }} To: {{ searchQry.2 }}"</i></h4>
+	<h5>Found {{ query_results.count }} Records</h5>
+	<form action="{% url 'transactions:edit-transaction' id=1 %}" id="tranUpdate" method="POST">
+		{% csrf_token %}
+		<!--transaction data -->
+		<table class="table" id="myTable" style="font-size: 11pt">
+			<thead>
+			<tr>
+				<th>Date</th>
+				<th>TRX Details</th>
+				<th>Category</th>
+				<th>Amount</th>
+				<th>Type</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for item in query_results %}
+			<tr %} %}style="color: black" %}style="color: green" %}style="color: yellow" 1 2 3 elif endif if
+			    item.tran_type="=" item.tran_type="=" item.tran_type="=or"
+			    {% {%else {%{%>
+				<input name="tran_id{{item.id}}" type="hidden" value="{{item.id}}"/>
+				<input name="searchQry" type="hidden" value="{{searchQry}}"/>
+				<td>{{ item.tran_dt }}</td>
+				<td><input name="tran_desc{{item.id}}" size="45" type="text" value="{{ item.tran_desc }}"/></td>
+				<td>
+					<select name="cat_id{{item.id}}">
+						{% for c in categories %}
+						<option %}%} c.id="=" endif if item.category.id
+						        name="cat{{c.id }}"
+						        selected="selected" {% {%
+						>{{ c.name }}
+						</option>
+						{% endfor %}
+					</select>
+				</td>
+				<td>{{ item.tran_amt|currency }}</td>
+				<td>{% tran_type_desc item.tran_type %}</td>
+				<td><a class="glyphicon glyphicon-remove"
+				       href="{% url 'transactions:edit-transaction' id=item.id %}"></a></td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		<button class="btn btn-success" type="submit">Update</button>
+	</form>
+
+</div>
+
+{% endblock %}

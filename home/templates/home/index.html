@@ -1,0 +1,86 @@
+{% extends 'home/base.html' %}
+{% load tran_tags %}
+
+{% block content %}
+<div class="col-md-8">
+	
+	<h3>Total Results: </b>{{ total_records }} Records</h3>
+	
+	<!--transaction data -->
+	<table class="table" id="myTable">
+		<thead id="theader">
+		<th onclick="javascript:sortTable(0);">Date</th>
+		<th onclick="javascript:sortTable(1);">TRX Details</th>
+		<th onclick="javascript:sortTable(2);">Category</th>
+		<th onclick="javascript:sortTable(3);">Amount</th>
+		<th onclick="javascript:sortTable(4);">Type</th>
+		</thead>
+		<tbody id="tbody">
+		{% for item in upload_results %}
+		<tr {% if item.tran_type == 1 %}style="color: black" {% elif item.tran_type == 2 %}style="color: green"{%else
+		    %}style="color: yellow"{% endif %}>
+		<td>{{ item.tran_dt }}</td>
+		<td>{{ item.tran_desc }}</td>
+		<td>{{ item.category.name }}</td>
+		<td>{{ item.tran_amt|currency }}</td>
+		<td>{% tran_type_desc item.tran_type %}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	<!-- pagination code -->
+	<ul class="pagination">
+		{% if upload_results.has_previous %}
+		<li><a href="?page={{ upload_results.previous_page_number }}">&laquo;</a></li>
+		{% else %}
+		<li class="disabled"><span>&laquo;</span></li>
+		{% endif %}
+		{% for i in upload_results.paginator.page_range %}
+		{% if upload_results.number == i %}
+		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+		{% else %}
+		<li><a href="?page={{ i }}">{{ i }}</a></li>
+		{% endif %}
+		{% endfor %}
+		{% if upload_results.has_next %}
+		<li><a href="?page={{ upload_results.next_page_number }}">&raquo;</a></li>
+		{% else %}
+		<li class="disabled"><span>&raquo;</span></li>
+		{% endif %}
+	</ul>
+</div>
+
+<div class="col-md-4">
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li><font color="red">{{ message}}</font></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	<form action="{% url 'upload-csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+		{% csrf_token%}
+		<div>
+			<h3>Upload Transactions: </h3>
+			<label class="form-check-label">File: </label>
+			<input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+			<div>
+				<input class="form-check-input" type="radio" name="file_type" id="file_type1" value="CAPITAL"
+				       checked>
+				<label for="file_type1" class="form-check-label">Capital One </label>
+			</div>
+			<div>
+				<input class="form-check-input" type="radio" name="file_type" id="file_type2" value="PNC">
+				<label for="file_type2" class="form-check-label">PNC Bank </label>
+			</div>
+		
+		</div>
+		<div>
+			<button>Upload</span>
+		</div>
+	</form>
+
+</div>
+
+{% endblock %}
