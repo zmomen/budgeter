@@ -1,11 +1,7 @@
 from transactions.models import Transaction, Category
-from transactions.BankClassify import BankClassify
 
 
 def bulk_insert_trans(data, file_type):
-    # bc = BankClassify()
-    # train = Transaction.objects.values_list('tran_desc', 'category__name')
-    # bc.update_training_set(train)
 
     # CAPITAL transactions
     if file_type == 'CAPITAL':
@@ -44,9 +40,7 @@ def bulk_insert_trans(data, file_type):
 
         for row in data:
             # classify transaction categories.
-            cat = Category.objects.filter(name__contains=bc.category_classify(row[1]))[0]
-            # print(row[1], cat, bc.get_accuracy())
-            Transaction.objects.create(tran_dt=row[0], tran_desc=row[1], category=cat,
+            cat = Category.objects.get(id=12)
+            Transaction.objects.create(tran_dt=row[0], tran_desc=row[1],category=cat,
                                        tran_amt=float(row[2]), tran_type=int(row[3]))
-
-    return 'celery transactions inserted!'
+    return 'transactions inserted!'
