@@ -53,7 +53,7 @@ def reports(request, year=None, month=None, cat_id=None):
 
 
 def add_categories(request):
-    return redirect('home')
+    return redirect('home:homepage')
 
 
 def view_categories(request):
@@ -84,7 +84,7 @@ def search(request):
         to_date = request.GET.get('to_date') if request.GET.get('to_date') != '' else '2099-01-01'
         if searchQry == '' and from_date == '1970-01-01' and to_date == '2099-01-01':
             messages.add_message(request, messages.ERROR, 'Error: No search value provided!')
-            return redirect('home')
+            return redirect('home:homepage')
 
         else:
 
@@ -123,4 +123,4 @@ def edit_transaction(request, id=None):
         tran = Transaction.objects.get(id=id)
         tran.delete()
         messages.add_message(request, messages.INFO, tran + 'deleted!')
-    return redirect('home')
+    return redirect('home:homepage')
