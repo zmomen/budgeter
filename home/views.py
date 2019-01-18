@@ -57,4 +57,4 @@ def upload_csv(request):
 
     # pct = 'Percentage: %8.2f%%' % bc.get_accuracy()
     # messages.add_message(request, messages.ERROR, pct)
-    return redirect('home')
+    return redirect('home:homepage')
