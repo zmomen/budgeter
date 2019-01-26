@@ -82,7 +82,7 @@ def search(request):
         searchQry = request.GET.get('txtSearch')
         from_date = request.GET.get('from_date') if request.GET.get('from_date') != '' else '1970-01-01'
         to_date = request.GET.get('to_date') if request.GET.get('to_date') != '' else '2099-01-01'
-        if searchQry == '' and from_date == '1970-01-01' and to_date == '2099-01-01':
+        if len(searchQry.replace(' ','')) == 0 and from_date == '1970-01-01' and to_date == '2099-01-01':
             messages.add_message(request, messages.ERROR, 'Error: No search value provided!')
             return redirect('home:homepage')
 
@@ -118,7 +118,8 @@ def edit_transaction(request, id=None):
                 new_cat = Category.objects.get(name=request.POST['cat_id' + tran_id])
                 new_desc = request.POST['tran_desc' + tran_id]
                 tran = Transaction.objects.filter(id=tran_id).update(category=new_cat, tran_desc=new_desc)
-        messages.add_message(request, messages.INFO, 'Transaction ' + ' updated!')
+
+        messages.add_message(request, messages.INFO, 'Transaction updated!')
     elif request.method == "GET":
         tran = Transaction.objects.get(id=id)
         tran.delete()
