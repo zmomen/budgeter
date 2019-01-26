@@ -23,8 +23,7 @@ class HomeView(TemplateView):
             total_records = Transaction.objects.all().count()
             categories = Category.objects.all()
 
-            pct = 0  # 'Percentage: %8.2f%%' % bc.get_accuracy()
-            args = {'upload_results': trans, 'total_records': total_records, 'categories': categories, 'pct': pct}
+            args = {'upload_results': trans, 'total_records': total_records, 'categories': categories}
 
         except PageNotAnInteger:
             trans = paginator.page(1)
