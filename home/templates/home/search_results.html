@@ -22,29 +22,29 @@
 			</thead>
 			<tbody>
 			{% for item in query_results %}
-			<tr %} %}style="color: black" %}style="color: green" %}style="color: yellow" 1 2 3 elif endif if
-			    item.tran_type="=" item.tran_type="=" item.tran_type="=or"
-			    {% {%else {%{%>
-				<input name="tran_id{{item.id}}" type="hidden" value="{{item.id}}"/>
-				<input name="searchQry" type="hidden" value="{{searchQry}}"/>
-				<td>{{ item.tran_dt }}</td>
-				<td><input name="tran_desc{{item.id}}" size="45" type="text" value="{{ item.tran_desc }}"/></td>
-				<td>
-					<select name="cat_id{{item.id}}">
-						{% for c in categories %}
-						<option %}%} c.id="=" endif if item.category.id
-						        name="cat{{c.id }}"
-						        selected="selected" {% {%
-						>{{ c.name }}
-						</option>
-						{% endfor %}
-					</select>
-				</td>
-				<td>{{ item.tran_amt|currency }}</td>
-				<td>{% tran_type_desc item.tran_type %}</td>
-				<td><a class="glyphicon glyphicon-remove"
-				       href="{% url 'transactions:edit-transaction' id=item.id %}"></a></td>
-			</tr>
+        <tr {% if item.tran_type == 1 or item.tran_type == 3  %}
+            style="color: black" {% elif item.tran_type == 2 %}
+            style="color: green"{%else%}style="color: yellow"{% endif %}>
+            <input type="hidden" name="tran_id{{item.id}}" value="{{item.id}}" />
+            <input type="hidden" name="searchQry" value="{{searchQry}}" />
+            <td>{{ item.tran_dt }}</td>
+            <td><input type="text" size="45" name="tran_desc{{item.id}}" value="{{ item.tran_desc }}" /></td>
+            <td>
+                <select name="cat_id{{item.id}}">
+					{% for c in categories %}
+					<option name="cat{{c.id }}"{% if c.id == item.category.id %}
+					        selected="selected"
+					        {% endif %}
+					>{{ c.name }}
+					</option>
+					{% endfor %}
+				</select>
+            </td>
+            <td>{{ item.tran_amt|currency }}</td>
+            <td>{% tran_type_desc item.tran_type %}</td>
+            <td><a class="glyphicon glyphicon-remove"
+                       href="{% url 'transactions:edit-transaction' id=item.id %}"></a></td>
+        </tr>
 			{% endfor %}
 			</tbody>
 		</table>
