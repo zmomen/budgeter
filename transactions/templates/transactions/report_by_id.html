@@ -37,8 +37,9 @@
 		</thead>
 		<tbody id="tbody">
 		{% for i in cat_id_spend %}
-		<tr {% if i.tran_type="=" 1 %}style="color: black" {% elif i.tran_type="=" 2 %}style="color: green" {%else
-		    %}style="color: yellow" {% endif %}>
+		<tr {% if i.tran_type == 1 %}
+		    style="color: black" {% elif i.tran_type == 2 %}
+		    style="color: green" {%else%} style="color: yellow" {% endif %}>
 			<td>{{ i.tran_dt }}</td>
 			<td>{{ i.tran_desc }}</td>
 			<td>{{ i.totals|currency }}</td>
