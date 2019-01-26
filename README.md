@@ -1,3 +1,3 @@
 # budgeter
 
-Personal budget app that processes bank transactions and shows expense reports by category and month. 
+Django application that servers as a personal budget app. It processes bank transactions and shows expense reports by category and month. 
