@@ -31,8 +31,7 @@ class Transaction(models.Model):
             return 'Credit Card Payment'
 
     def __str__(self):
-        return self.tran_desc + ' ' + str(self.tran_amt)
-
+        return self.tran_desc
 
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('tran_desc', 'tran_amt', 'month_yr', 'tran_type')

@@ -123,5 +123,5 @@ def edit_transaction(request, id=None):
     elif request.method == "GET":
         tran = Transaction.objects.get(id=id)
         tran.delete()
-        messages.add_message(request, messages.INFO, tran + 'deleted!')
+        messages.add_message(request, messages.INFO, 'deleted!')
     return redirect('home:homepage')
