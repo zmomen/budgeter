@@ -6,8 +6,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
+from transactions.helpers import bulk_insert_trans
 from transactions.models import Transaction, Category
-from .helpers import bulk_insert_trans
 
 
 # Create your views here.
