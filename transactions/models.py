@@ -18,6 +18,7 @@ class Transaction(models.Model):
     tran_type = models.SmallIntegerField(default=1, blank=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
     tran_amt = models.FloatField()
+    objects = models.Manager()
 
     def month_yr(self):
         return self.tran_dt.strftime('%b %Y')
