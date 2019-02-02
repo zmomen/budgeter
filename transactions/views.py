@@ -82,7 +82,7 @@ def search(request):
         searchQry = request.GET.get('txtSearch')
         from_date = request.GET.get('from_date') if request.GET.get('from_date') != '' else '1970-01-01'
         to_date = request.GET.get('to_date') if request.GET.get('to_date') != '' else '2099-01-01'
-        if len(searchQry.replace(' ','')) == 0 and from_date == '1970-01-01' and to_date == '2099-01-01':
+        if len(searchQry.replace(' ', '')) == 0 and from_date == '1970-01-01' and to_date == '2099-01-01':
             messages.add_message(request, messages.ERROR, 'Error: No search value provided!')
             return redirect('home:homepage')
 
@@ -126,3 +126,52 @@ def edit_transaction(request, id=None):
         messages.add_message(request, messages.INFO, 'deleted!')
     return redirect('home:homepage')
 
+
+def bulk_insert_trans(request, data, file_type):
+    if request.method == "POST":
+        total_rows = 0
+        # CAPITAL transactions
+        if file_type == 'CAPITAL':
+            for row in data:
+                total_rows += 1
+                if len(Category.objects.filter(name__contains=row[4])) == 0:
+                    cat = Category.objects.create(name=row[4])
+                else:
+                    cat = Category.objects.filter(name__contains=row[4])[0]
+
+                deb = 0 if row[5] == '' else float(row[5])
+                cred = 0 if row[6] == '' else float(row[6])
+                Transaction.objects.create(tran_dt=row[0], tran_desc=row[3], category=cat,
+                                           tran_amt=deb - cred, tran_type=1)
+        # else PNC transaction
+        else:
+            # remove characters and prep for float conversion.
+            data = [[item.replace('$', '').replace(',', '').replace('  ', ' ')
+                         .replace('/', '').rstrip() for item in lst] for lst in data]
+            for row in data:
+                if 'CAPITAL' in ' '.join(row):
+                    data.remove(row)
+
+            for i in range(len(data)):
+                # remove balance and convert the date
+                val = data[i][0]
+                val = val[4:] + '-' + val[:2] + '-' + val[2:4]
+                data[i][0] = str(val)
+                data[i] = data[i][:-1]
+                if data[i][-2] == '':
+                    del data[i][-2]
+                    data[i].append(2)  # 'Credit'
+                else:
+                    del data[i][-1]
+                    data[i].append(1)  # 'Debit'
+
+            for row in data:
+                total_rows += 1
+                # classify transaction categories.
+                cat = Category.objects.get(id=12)
+                Transaction.objects.create(tran_dt=row[0], tran_desc=row[1], category=cat,
+                                           tran_amt=float(row[2]), tran_type=int(row[3]))
+
+        # pct = 'Percentage: %8.2f%%' % bc.get_accuracy()
+        messages.add_message(request, messages.ERROR, str(total_rows) + ' transactions inserted!')
+    return redirect('home:homepage')
