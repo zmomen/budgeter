@@ -3,11 +3,11 @@ import csv
 
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from transactions.helpers import bulk_insert_trans
 from transactions.models import Transaction, Category
+from transactions.views import bulk_insert_trans
 
 
 # Create your views here.
@@ -46,14 +46,6 @@ def upload_csv(request):
     reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
     next(reader, None)
 
-    data = []
-    for line in reader:
-        data.append(line)
-
     file_type = request.POST.get('file_type', '')
-    bulk_insert_trans(data, file_type)
-    print('inserting transactions...')
+    return bulk_insert_trans(request, reader, file_type)
 
-    # pct = 'Percentage: %8.2f%%' % bc.get_accuracy()
-    # messages.add_message(request, messages.ERROR, pct)
-    return redirect('home:homepage')
