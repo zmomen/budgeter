@@ -7,6 +7,7 @@ class Category(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
