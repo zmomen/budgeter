@@ -125,3 +125,4 @@ def edit_transaction(request, id=None):
         tran.delete()
         messages.add_message(request, messages.INFO, 'deleted!')
     return redirect('home:homepage')
+
