@@ -17,10 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 
-from home import views as home_views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include('transactions.urls', namespace='transactions')),
     url(r'^', include('home.urls', namespace='home')),
+    url(r'^', include('reports.urls', namespace='reports')),
 ]
