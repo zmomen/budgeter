@@ -11,7 +11,7 @@
 		</tr>
 		{% for i in cat_spend %}
 		<tr>
-			<td><a href="{% url 'reports:by_category_id' cat_id=i.category__id %}">
+			<td><a href="{% url 'transactions:by_category_id' cat_id=i.category__id %}">
 				{{ i.category__name }}</a></td>
 			<td>{{ i.totals|currency }}</td>
 		</tr>

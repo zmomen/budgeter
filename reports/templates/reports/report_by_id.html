@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% load tran_tags %}
+
+{% block content %}
+{% if report_type == 'by month' %}
+<div class="col-md-8">
+	<p><b> {% month_name monthYear.0 %} {{monthYear.1 }} Spend</b></p>
+	<table class="table" style="font-size: 13">
+		<thead id="theader">
+		<th onclick="javascript:sortTable(0);">Date</th>
+		<th onclick="javascript:sortTable(1);">Tran Description</th>
+		<th onclick="javascript:sortTable(2);">Category</th>
+		<th onclick="javascript:sortTable(3);">Amount</th>
+		</thead>
+		<tbody id="tbody">
+		{% for i in month_id_spend %}
+		<tr>
+			<td>{{ i.tran_dt }}</td>
+			<td>{{ i.tran_desc }}</td>
+			<td>{{ i.category__name }}</td>
+			<td>{{ i.totals|currency }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% elif report_type == 'by category' %}
+<div class="col-md-8">
+	<p><b>{{ category_name }}</b></p>
+	<table class="table" style="font-size: 13">
+		<thead id="theader">
+		<th onclick="javascript:sortTable(0);">Date</th>
+		<th onclick="javascript:sortTable(1);">Tran Description</th>
+		<th onclick="javascript:sortTable(2);">Amount</th>
+		<th onclick="javascript:sortTable(3);">Type</th>
+		</thead>
+		<tbody id="tbody">
+		{% for i in cat_id_spend %}
+		<tr {% if i.tran_type == 1 %}
+		    style="color: black" {% elif i.tran_type == 2 %}
+		    style="color: green" {%else%} style="color: yellow" {% endif %}>
+			<td>{{ i.tran_dt }}</td>
+			<td>{{ i.tran_desc }}</td>
+			<td>{{ i.totals|currency }}</td>
+			<td>{% tran_type_desc i.tran_type %}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+{% endblock %}
