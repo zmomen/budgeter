@@ -18,7 +18,7 @@ def reports(request, year=None, month=None, cat_id=None):
             .order_by('-tran_dt', 'category__name', '-totals')
 
         args = {'month_id_spend': month_id_spend, 'report_type': 'by month', 'monthYear': [month, year]}
-        return render(request, 'transactions/report_by_id.html', args)
+        return render(request, 'reports/report_by_id.html', args)
     # else by category_id
     elif cat_id:
         cat_id_spend = Transaction.objects.values('tran_dt', 'tran_type', 'tran_desc', 'category__name',
@@ -29,7 +29,7 @@ def reports(request, year=None, month=None, cat_id=None):
             .order_by('-tran_dt', 'category__name', '-totals')
         category_name = Category.objects.get(id=cat_id).name
         args = {'cat_id_spend': cat_id_spend, 'report_type': 'by category', 'category_name': category_name}
-        return render(request, 'transactions/report_by_id.html', args)
+        return render(request, 'reports/report_by_id.html', args)
     # else main page.
     else:
         cat_spend = Transaction.objects.values('category__name', 'category__id') \
@@ -48,4 +48,4 @@ def reports(request, year=None, month=None, cat_id=None):
 
         args = {'cat_spend': cat_spend, 'month_spend': month_spend, 'deposits': deposits}
 
-        return render(request, 'transactions/reports.html', args)
+        return render(request, 'reports/reports.html', args)
