@@ -22,12 +22,14 @@
 			</thead>
 			<tbody>
 			{% for item in query_results %}
-        <tr {% if item.tran_type == 1 or item.tran_type == 3  %}
-            style="color: black" {% elif item.tran_type == 2 %}
-            style="color: green"{%else%}style="color: yellow"{% endif %}>
-            <input type="hidden" name="tran_id{{item.id}}" value="{{item.id}}" />
-            <input type="hidden" name="searchQry" value="{{searchQry}}" />
-            <td>{{ item.tran_dt }}</td>
+            <tr style="{% if item.tran_type == 1 or item.tran_type == 3  %}
+             color: black {% elif item.tran_type == 2 %}
+             color: green{%else%}color: yellow{% endif %}">
+            <td>
+             <input type="hidden" name="tran_id{{item.id}}" value="{{item.id}}" />
+             <input type="hidden" name="searchQry" value="{{searchQry}}" />
+             {{ item.tran_dt }}
+            </td>
             <td><input type="text" size="45" name="tran_desc{{item.id}}" value="{{ item.tran_desc }}" /></td>
             <td>
                 <select name="cat_id{{item.id}}">
