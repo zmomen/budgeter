@@ -18,7 +18,7 @@ class TransactionsManager(models.Manager):
 
     def get_month_details(self, year, month):
         return self.values('tran_dt', 'tran_desc', 'category__name') \
-            .exclude(category__name__in=['Deposit', 'Credit Card']) \
+            .exclude(category__name__in=['Payment/Credit']) \
             .annotate(year=functions.ExtractYear('tran_dt')) \
             .annotate(month=functions.ExtractMonth('tran_dt')) \
             .annotate(totals=Sum('tran_amt')) \
@@ -40,7 +40,7 @@ class TransactionsManager(models.Manager):
 
     def display_by_month_year(self):
         return self.annotate(year=functions.ExtractYear('tran_dt')) \
-            .exclude(category__name__in=['Deposit', 'Credit Card']) \
+            .exclude(category__name__in=['Payment/Credit']) \
             .annotate(month=functions.ExtractMonth('tran_dt')).values('year', 'month') \
             .annotate(totals=Sum('tran_amt')).order_by('-year', '-month', '-totals')
 
