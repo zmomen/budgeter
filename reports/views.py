@@ -27,3 +27,4 @@ def reports(request, year=None, month=None, cat_id=None):
 
         args = {'cat_spend': cat_spend, 'month_spend': month_spend, 'deposits': deposits}
         return render(request, 'reports/reports.html', args)
+
