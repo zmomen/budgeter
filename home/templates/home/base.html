@@ -22,11 +22,11 @@
 	<div class="pull-right">
 		<form action="{% url 'transactions:search' %}" method="GET">
 			<label for="txtSearch">Search:</label>
-			<input class="pull-right" name="txtSearch" placeholder="..." type="text"> <br/><br/>
+			<input id="txtSearch" class="pull-right" name="txtSearch" placeholder="..." type="text"> <br/><br/>
 			<label for="from_date">From:</label>
-			<input class="pull-right" name="from_date" type="date"><br/><br/>
+			<input id="from_date" class="pull-right" name="from_date" type="date"><br/><br/>
 			<label for="to_date">To:</label>
-			<input class="pull-right" name="to_date" type="date"><br/><br/>
+			<input id="to_date" class="pull-right" name="to_date" type="date"><br/><br/>
 			<button class="btn btn-primary" type="submit">
 				<span class="glyphicon glyphicon-search"></span>
 			</button>
