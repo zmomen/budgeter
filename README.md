@@ -7,4 +7,4 @@ Django application that serves as a personal budget app. It allows the user to u
 
 #### Reports page: 
 
-<a href="url"><img src="http://url.to/image.png" align="left" height="48" width="48" ></a>
+<img src="http://url.to/image.png" align="left" height="48" width="48" >
