@@ -15,5 +15,7 @@ Currently there are two types of reports: by category and by month.
 
 Clicking on each category shows individual transactions. Same for clicking on a date.
 <br/> 
+<br/> 
+<br/> 
 ![](https://raw.githubusercontent.com/zmomen/budgeter/master/static/img/by_category.png )
  
