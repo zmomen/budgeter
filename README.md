@@ -9,12 +9,12 @@ Django application that serves as a personal budget app. It allows the user to u
 
 Currently there are two types of reports: by category and by month. 
 <br/>
-![](https://raw.githubusercontent.com/zmomen/budgeter/master/static/img/reports.png )
+![](https://raw.githubusercontent.com/zmomen/budgeter/master/static/img/reports.png)
 
 
 Clicking on each category shows individual transactions. Same for clicking on a date.
 
-![](https://raw.githubusercontent.com/zmomen/budgeter/master/static/img/by_category.png )
+![](https://raw.githubusercontent.com/zmomen/budgeter/master/static/img/by_category.png)
 
 
  
