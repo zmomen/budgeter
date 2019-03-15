@@ -4,12 +4,12 @@ from transactions.models import Transaction, Category
 
 
 # Create your views here.
-def reports(request, year=None, month=None, cat_id=None):
+def reports(request, tran_type=None, year=None, month=None, cat_id=None):
     # by month and year
     if year and month:
-        month_id_spend = Transaction.objects.get_month_details(year=year, month=month)
+        month_id_details = Transaction.objects.get_month_details(year=year, month=month, tran_type=tran_type)
+        args = {'month_id_details': month_id_details, 'report_type': 'by month', 'monthYear': [month, year]}
 
-        args = {'month_id_spend': month_id_spend, 'report_type': 'by month', 'monthYear': [month, year]}
         return render(request, 'reports/report_by_id.html', args)
 
     # else by category_id
