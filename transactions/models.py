@@ -16,15 +16,26 @@ class Category(models.Model):
 
 class TransactionsManager(models.Manager):
 
-    def get_month_details(self, year, month):
-        return self.values('tran_dt', 'tran_desc', 'category__name') \
-            .exclude(category__name__in=['Payment/Credit']) \
-            .annotate(year=functions.ExtractYear('tran_dt')) \
-            .annotate(month=functions.ExtractMonth('tran_dt')) \
-            .annotate(totals=Sum('tran_amt')) \
-            .filter(year=year, month=month) \
-            .values('tran_dt', 'tran_desc', 'category__name', 'totals') \
-            .order_by('-tran_dt', 'category__name', '-totals')
+    def get_month_details(self, year, month, tran_type=None):
+        if tran_type == 'spend':
+            return self.values('tran_dt', 'tran_desc', 'category__name') \
+                .exclude(category__name__in=['Payment/Credit']) \
+                .annotate(year=functions.ExtractYear('tran_dt')) \
+                .annotate(month=functions.ExtractMonth('tran_dt')) \
+                .annotate(totals=Sum('tran_amt')) \
+                .filter(year=year, month=month, tran_type=1) \
+                .values('tran_dt', 'tran_desc', 'category__name', 'totals') \
+                .order_by('-tran_dt', 'category__name', '-totals')
+        elif tran_type == 'income':
+            print("yes get mon deta", tran_type)
+            return self.values('tran_dt', 'tran_desc', 'category__name') \
+                .exclude(category__name__in=['Payment/Credit']) \
+                .annotate(year=functions.ExtractYear('tran_dt')) \
+                .annotate(month=functions.ExtractMonth('tran_dt')) \
+                .annotate(totals=Sum('tran_amt')) \
+                .filter(year=year, month=month, tran_type=2) \
+                .values('tran_dt', 'tran_desc', 'category__name', 'totals') \
+                .order_by('-tran_dt', 'category__name', '-totals')
 
     def get_by_cat_id(self, cat_id):
         return self.values('tran_dt', 'tran_type', 'tran_desc', 'category__name','category__id') \
