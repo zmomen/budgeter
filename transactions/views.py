@@ -11,10 +11,7 @@ def add_categories(request):
 
 def view_categories(request):
     if request.method == 'GET':
-        categories = Category.objects.all()
-        args = {'categories': categories}
-
-        return render(request, 'transactions/category.html', args)
+        return render(request, 'transactions/category.html' )
 
 
 def edit_category(request, action=None, id=None):
