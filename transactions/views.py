@@ -53,9 +53,8 @@ def search(request):
 
             # filter by dates
             found = found & Transaction.objects.filter(tran_dt__range=(from_date, to_date)).order_by('-tran_dt')
-    categories = Category.objects.all()
 
-    args = {'query_results': found, 'searchQry': [searchQry, from_date, to_date], 'categories': categories}
+    args = {'query_results': found, 'searchQry': [searchQry, from_date, to_date]}
     return render(request, 'home/search_results.html', args)
 
 
