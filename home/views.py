@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from transactions.models import Transaction, Category
+from transactions.models import Transaction
 from transactions.views import bulk_insert_trans
 
 
@@ -21,9 +21,7 @@ class HomeView(TemplateView):
             paginator = Paginator(trans_list, 10)
             trans = paginator.page(page)
             total_records = Transaction.objects.all().count()
-            categories = Category.objects.all()
-
-            args = {'upload_results': trans, 'total_records': total_records, 'categories': categories}
+            args = {'upload_results': trans, 'total_records': total_records}
 
         except PageNotAnInteger:
             trans = paginator.page(1)
