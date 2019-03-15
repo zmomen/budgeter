@@ -28,7 +28,7 @@
 		</tr>
 		{% for i in month_spend %}
 		<tr>
-			<td><a href="{% url 'reports:by_month_id' year=i.year month=i.month %}">
+			<td><a href="{% url 'reports:by_month_id' tran_type='spend' year=i.year month=i.month %}">
 				{% month_name i.month %} {{ i.year}}</a></td>
 			<td>{{ i.totals|currency }}</td>
 		</tr>
@@ -45,7 +45,7 @@
 		</tr>
 		{% for i in deposits %}
 		<tr>
-			<td><a href="{% url 'reports:by_month_id' year=i.year month=i.month %}">
+			<td><a href="{% url 'reports:by_month_id' tran_type='income' year=i.year month=i.month %}">
 				{% month_name i.month %} {{ i.year}}</a></td>
 			<td>{{ i.totals|currency }}</td>
 		</tr>
