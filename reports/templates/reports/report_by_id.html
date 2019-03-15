@@ -4,7 +4,7 @@
 {% block content %}
 {% if report_type == 'by month' %}
 <div class="col-md-8">
-	<p><b> {% month_name monthYear.0 %} {{monthYear.1 }}</b></p>
+	<p><b> {% month_name monthYear.0 %} {{monthYear.1 }} {{tran_type|title}}</b></p>
 	<table class="table" style="font-size: 13">
 		<thead id="theader">
 		<th onclick="javascript:sortTable(0);">Date</th>
