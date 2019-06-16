@@ -4,7 +4,7 @@
 {% block content %}
 <div class="col-md-8">
 	
-	<h3>Search results for <i>"{{ searchQry.0 }}"</i></h3>
+	<h3>Search results for <i>{{ searchQry.0 }}</i></h3>
 	<h4>From: {{ searchQry.1 }} To: {{ searchQry.2 }}"</i></h4>
 	<h5>Found {{ query_results.count }} Records</h5>
 	<form action="{% url 'transactions:edit-transaction' id=1 %}" id="tranUpdate" method="POST">
