@@ -5,7 +5,7 @@
 {% if report_type == 'by month' %}
 <div class="col-md-8">
 	<p><b> {% month_name monthYear.0 %} {{monthYear.1 }} {{tran_type|title}}</b></p>
-	<table class="table" style="font-size: 13">
+	<table class="table" style="font-size: 14">
 		<thead id="theader">
 		<th onclick="javascript:sortTable(0);">Date</th>
 		<th onclick="javascript:sortTable(1);">Tran Description</th>
@@ -28,7 +28,7 @@
 {% elif report_type == 'by category' %}
 <div class="col-md-8">
 	<p><b>{{ category_name }}</b></p>
-	<table class="table" style="font-size: 13">
+	<table class="table" style="font-size: 14">
 		<thead id="theader">
 		<th onclick="javascript:sortTable(0);">Date</th>
 		<th onclick="javascript:sortTable(1);">Tran Description</th>

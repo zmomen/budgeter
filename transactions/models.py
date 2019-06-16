@@ -51,7 +51,7 @@ class TransactionsManager(models.Manager):
 
     def display_by_month_year(self):
         return self.annotate(year=functions.ExtractYear('tran_dt')) \
-            .exclude(category__name__in=['Payment/Credit']) \
+            .exclude(category__name__in=['Payment/Credit', 'Income']) \
             .annotate(month=functions.ExtractMonth('tran_dt')).values('year', 'month') \
             .annotate(totals=Sum('tran_amt')).order_by('-year', '-month', '-totals')
 
