@@ -27,7 +27,7 @@ class TransactionsManager(models.Manager):
                 .values('tran_dt', 'tran_desc', 'category__name', 'totals') \
                 .order_by('-tran_dt', 'category__name', '-totals')
         elif tran_type == 'income':
-            print("yes get mon deta", tran_type)
+            # print("yes get mon deta", tran_type)
             return self.values('tran_dt', 'tran_desc', 'category__name') \
                 .exclude(category__name__in=['Payment/Credit']) \
                 .annotate(year=functions.ExtractYear('tran_dt')) \
