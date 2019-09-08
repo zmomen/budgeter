@@ -23,7 +23,7 @@ def edit_category(request, action=None, id=None):
         elif action == 'add':
             c = Category(name=request.GET.get('new_cat'))
             c.save()
-            print(c)
+            # print(c)
             return redirect('transactions:view-categories')
 
 
@@ -60,7 +60,7 @@ def search(request):
 
 def edit_transaction(request, id=None):
     if request.method == "POST":
-        print(request.POST)
+        # print(request.POST)
         for key in request.POST:
             if 'tran_id' in key:
                 tran_id = request.POST[key]  # value of tran_id
