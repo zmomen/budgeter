@@ -11,7 +11,7 @@ def add_categories(request):
 
 def view_categories(request):
     if request.method == 'GET':
-        return render(request, 'transactions/category.html' )
+        return render(request, 'transactions/category.html')
 
 
 def edit_category(request, action=None, id=None):
@@ -117,10 +117,24 @@ def bulk_insert_trans(request, data, file_type):
             for row in data:
                 total_rows += 1
                 # classify transaction categories.
-                cat = Category.objects.get(id=12)
-                Transaction.objects.create(tran_dt=row[0], tran_desc=row[1], category=cat,
+                cat = Category.objects.get(id=determine_category_id(row[1]))
+                Transaction.objects.create(tran_dt=row[0], tran_desc="PNC-" + row[1], category=cat,
                                            tran_amt=float(row[2]), tran_type=int(row[3]))
 
         # pct = 'Percentage: %8.2f%%' % bc.get_accuracy()
         messages.add_message(request, messages.ERROR, str(total_rows) + ' transactions inserted!')
     return redirect('home:homepage')
+
+
+def determine_category_id(tran_description):
+    upper_desc = str.upper(tran_description)
+
+    for income in ["CASHOUT", "REIMBURSEMENT", "PAYROLL", "INVESTMENT", "INTEREST"]:
+        if income in upper_desc:
+            return 13
+    if "VENMO" in upper_desc:
+        return 15
+    if "ATM WITHDRAWAL" in upper_desc:
+        return 5
+
+    return 12
